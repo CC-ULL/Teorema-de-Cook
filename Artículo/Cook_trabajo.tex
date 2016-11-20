@@ -1,0 +1,105 @@
+\documentclass[11pt, a4paper]{memoir}
+
+
+\include{config}
+\include{acro}
+
+
+\title{\Huge Teoría de la NP-completitud}
+
+\author{Luz Marina Moreno de Antonio}
+\author{Jorge Riera Ledesma}
+
+\affil{Departamento de Ingeniería Informática y de Sistemas. Universidad de La Laguna}
+
+\begin{document}
+\maketitle
+
+\chapter{Teorema de Cook}
+
+\section{Problema involucrado}
+
+\subsection*{\gls{sat}}
+
+\noindent ENTRADA: Un conjunto de cláusulas $C=\left \{c_1, c_2, \dots, c_m \right \}$ sobre un conjunto finito $U$ de variables.
+
+\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$? 
+
+
+\begin{thm}
+	\gls{sat} es $\mathcal{NP}$-completo.
+\end{thm}
+
+\begin{proof}
+Es fácil comprobar que \gls{sat}	$\in \mathcal{NP}$, ya que se puede encontrar una algoritmo para una \gls{ndtm} que reconozca el lenguaje $L(\mbox{3SAT},e)$, para un esquema de codificación $e$, en un número de pasos acotado por una función polinomial. De esta manera, el primer requerimiento para la prueba de $\mathcal{NP}$-completitud se cumple. 
+
+Para el segundo requerimiento debemos bajar a nivel de lenguaje, donde \gls{sat} se representa por un lenguaje $L_{SAT}=L[SAT,e]$ para algún esquema de codificación razonable $e$. Debemos demostrar que para todo lenguaje $L\in \mathcal{NP}$, $L \preceq L_{SAT}$. Los lenguajes de la clase $\mathcal{NP}$ son bastante diversos, se trata de una clase infinitamente grande, por lo que no esperemos presentar una demostración para cada uno de los lenguajes por separado.
+
+No obstante, todo lenguaje de la clase $\mathcal{NP}$ puede describirse de una manera estándar: mediante un programa para una \gls{ndtm} que lo reconozca en tiempo polinomial. Esto nos permitirá trabajar con un programa genérico para una \gls{ndtm} y derivar una transformación polinomial genérica desde el lenguaje que reconozca esta máquina genérica al lenguaje $L_{SAT}$. Esta transformación genérica, cuando se particularice para un programa de una \gls{ndtm} $M$ que reconozca el lenguaje $L_M$, dará la deseada transformación desde $L_M$ a $L_{SAT}$. Así, en esencia, presentaremos una demostración simultánea para todos los lenguajes $L\in \mathcal{NP}$ de que $L \preceq L_{SAT}$.
+
+Para empezar, denotemos por $M$ un programa arbitrario en tiempo polinomial para una \gls{ndtm}, especificado por $\Gamma$, $\Sigma$, $b$, $Q$, $q_0$, $q_Y$, $q_N$, y $\delta$, que reconoce el lenguaje $L=L_M$. Además, sea $p(n)$ un polinomio que acota superiormente la función $T_M(n)$. Sin pérdida de generalidad se asume que $p(n)\ge n$ para todo $n\in \mathbb{Z}^+$. La transformación genérica $f_L$ será derivada en términos de $M$, $\Gamma$, $\Sigma$, $b$, $Q$, $q_0$, $q_Y$, $q_N$, $\delta$ y $p$.
+
+Por razones de conveniencia describiremos $f_L$ como si fuera una función entre el conjunto de las cadenas de $\Sigma$ hasta las entradas del problema \gls{sat}, mas que hasta las cadenas del alfabeto inducido por el esquema de codificación asociado a \gls{sat}, ya que los detalles de la demostración asociados al esquema de codificación pueden ser deducidos fácilmente.
+
+De esta manera, $f_L$ tendrá la propiedad de que para todo $x\in \Sigma^*$, $x\in L$ si, y sólo si, $f_L(x)$ es satisfecho por una asignación booleana. La clave de las construcción de $f_L$ está en demostrar cómo un conjunto de cláusulas puede ser usado para comprobar si una entrada $x$ es aceptada por el programa para una \gls{ndtm} $M$, es decir, si $x\in L$.
+
+Si la cadena $x\in \Sigma^*$ es aceptada por $M$, entonces, habrá una secuencia de estados de $M$ que acepte $x$ acotada superiormente por un polinomio $p(n)$, donde $n=|x|$. Dicha secuencia no puede involucrar ninguna celda de la cinta excepto aquellas comprendidas entre $-p(n)$ y $p(n) + 1$ ya que la la cabeza de lectura/escritura comienza en la celda 1, y se mueve una única posición en cada paso. El estado de la computación en cualquier instante puede determinado completamente dando el contenido de las celdas, el estado actual, y la posición de la cabeza de lectura/escritura. Es más, puesto que no se llevarán a cabo más de $p(n)$ pasos durante la ejecución, habrá a los sumo $p(n) + 1$ instantes que deben ser considerados. Esto nos permitirá describir la computación completamente usando sólo un número limitado de variables booleanas y una asignación booleana para las mismas.
+
+A continuación se muestra cómo $f_L$ construye el conjunto de variables a partir de $M$. Se etiquetarán los estados de $Q$ como $q_0, q_1=q_Y, q_2=q_N, q_3, \dots, q_r$, donde $r= |Q|-1$, y los elementos de $\Gamma$ como $s_0 = b, s_1, s_2, \dots, s_v$, donde $v = |\Gamma| -1$. Se crearán tres tipos de variables, cuyo sentido se especifica en la tabla~\ref{tab:cooktab1}. 
+
+\begin{table}[!ht]
+	\caption{Variables creadas por $f_l$} \label{tab:cooktab1}
+	\begin{center}
+		{\small
+			\renewcommand{\arraystretch}{1.2}
+			\begin{tabular}{@{}C{.15\textwidth}C{.25\textwidth}L{.45\textwidth}@{}}
+\toprule
+{\em Variable} & {\em Rango} &\multicolumn{1}{C{.45\textwidth}}{\em Significado} \\ 
+\midrule
+$Q[i,k]$       & 
+
+  \begin{minipage}{.24\textwidth} %%
+  \centering
+    \begin{math} %%
+      \begin{array}{c} %%
+          0 \le i\le p(n)  \\ %%
+          0 \le k \le t %%
+        \end{array}%%
+    \end{math} %%
+  \end{minipage} & En el instante $i$, $M$ está en el estado $q_k$ \\ \\
+$H[i,i]$       & 
+
+  \begin{minipage}{.24\textwidth} %%
+  \centering
+    \begin{math} %%
+      \begin{array}{c} %%
+          0 \le i\le p(n) \\ %%
+          -p(n) \le j \le p(n) + 1 %%
+        \end{array}%%
+    \end{math} %%
+  \end{minipage} & En el instante $i$, la cabeza de lectura/escritura está examinando la celda $j$\\ \\ 
+$S[i,j,k]$       & 
+
+  \begin{minipage}{.24\textwidth} %%
+  \centering
+    \begin{math} %%
+      \begin{array}{c} %%
+          0 \le i\le p(n) \\ %%
+           -p(n) \le j \le p(n) + 1 \\ %%
+           0 \le k \le v 
+        \end{array}%%
+    \end{math} %%
+  \end{minipage} & En el instante $i$, el contenido de la celda $j$ es el símbolo $s_k$\\ 
+\bottomrule
+			\end{tabular}
+		}
+	\end{center}
+\end{table}
+\end{proof}
+
+
+
+\clearpage
+\printglossary[type=\acronymtype]
+
+\end{document}

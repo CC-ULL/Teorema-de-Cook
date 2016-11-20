@@ -1,0 +1,97 @@
+\documentclass[11pt, a4paper]{memoir}
+
+
+\include{config}
+\include{acro}
+
+
+\title{\Huge Seis problemas básicos $\mathcal{NP}$-completos}
+
+\author{Luz Marina Moreno de Antonio}
+\author{Jorge Riera Ledesma}
+
+\affil{Departamento de Ingeniería Informática y de Sistemas. Universidad de La Laguna}
+
+\begin{document}
+\maketitle
+
+\chapter{3SAT}
+
+\section{Problemas involucrados}
+
+\subsection*{\gls{sat}}
+
+\noindent ENTRADA: Un conjunto de cláusulas $C=\left \{c_1, c_2, \dots, c_m \right \}$ sobre un conjunto finito $U$ de variables.
+
+\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$? 
+
+
+\subsection*{\gls{3sat}}
+
+\noindent ENTRADA: Un conjunto de cláusulas $C=\left \{c_1, c_2, \dots, c_m \right \}$ sobre un conjunto finito $U$ de variables tal que $|c_i|=3$, para $1\le i \le m$.
+
+\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$? 
+
+\section{Demostración de NP-completitud}
+
+\begin{thm}
+	\gls{3sat} es $\mathcal{NP}$-completo.
+\end{thm}
+
+\begin{proof}
+Es fácil comprobar que \gls{3sat}	$\in \mathcal{NP}$, ya que se puede encontrar una algoritmo para una \gls{ndtm} que reconozca el lenguaje $L(\mbox{3SAT},e)$, para un esquema de codificación $e$, en un número de pasos acotado por una función polinomial.
+
+Transformaremos \gls{sat} en \gls{3sat}. Sea $U=\left \{u_1, u_2, \dots, u_n  \right\}$ un conjunto de variables, y $C=\left \{c_1, c_2, \dots, c_m \right \}$ un conjunto de cláusulas conformando una entrada arbitraria de \gls{sat}. Construiremos una conjunto $C'$ de cláusulas de tres literales, basadas en un conjunto $U'$ de variables, tal que $C'$ es satisfactible si y solo si $C$ es satisfactible.
+
+La construcción de $C'$ simplemente remplazará cada cláusula individual $c_j\in C$ por un conjunto equivalente $C'_j$ de cláusulas de tres literales, basada en las variables originales $U$, y algunas variables adicionales $U'_j$, cuyo uso estará restringido a las cláusulas de $C'_j$. Esta construcción dará lugar a los conjuntos 
+\[
+U' = U \cup \left( \bigcup_{j=1}^m U'_j\right)
+\]
+y
+\[
+C' = \bigcup_{j=1}^mC_j.
+\]
+De esta manera, sólo se necesita demostrar cómo construir $C'_j$ y $U'_j$ a partir de $c_j$.
+
+Supóngase que la cláusula $c_j$ viene definida por los literales $\left \{ z_1, z_2, \dots, z_k  \right\}$, donde cada uno de estos elementos deriva de las variables de $U$. La forma en que construimos los conjuntos  $C'_j$ y $U'_j$ va a depender del valor de $k$.
+
+\vspace{0.5cm}
+
+\begin{tabular}{@{}lll@{}}
+Caso 1. & $k = 1$. & $U'_j = \left \{ y_j^1, y_j^2 \right \}$ \\
+        &          &$C'_j = \left \{ \left \{  z_1, y_j^1, y_j^2  \right \}, \left \{  z_1, \bar{y}_j^1, y_j^2  \right \} , \left \{  z_1, y_j^1, \bar{y}_j^2  \right \}, \left \{  z_1, \bar{y}_j^1, \bar{y}_j^2  \right \}   \right \}$ 	\\
+Caso 2. & $k = 2$. & $U'_j = \left \{ y_j^1 \right \}$ \\
+        &          &$C'_j = \left \{ \left \{  z_1, z_2, y_j^1  \right \}, \left \{  z_1, z_2, \bar{y}_j^1  \right \}   \right \}$ 	\\
+Caso 3. & $k = 3$. & $U'_j = \emptyset$ \\
+        &          &$C'_j = \left \{  c_j  \right \}$ 	\\        
+Caso 4. & $k = 4$. & $U'_j = \left \{ y^i_j | 1 \le i \le k - 3  \right \}$ \\
+        &          &$C'_j = \left \{  z_1, z_2, y_j^1  \right \} \cup \left\{\left \{ \bar{y}_j^i, z_{i + 2}, y_j^{i + 1}  \right \} | 1 \le i \le k - 4 \right \} \cup \left \{ \bar{y}_j^{k -3}, z_{k -1}, z_k  \right \}$ 	\\
+\end{tabular}
+
+\vspace{0.5cm}
+
+Para probar que esto es en efecto una transformación, debemos demostrar que el conjunto de cláusulas $C'$ es satisfactible si y sólo si el conjunto $C$ lo es. Supóngase primero que $t:U\rightarrow \left \{T,F \right \}$ es una asignación booleana que satisface $C$. Veremos a continuación que $t$ puede ser extendida a una asignación booleanta $t':U'\rightarrow \left \{T,F \right \}$ satisfaciendo $C'$. Puesto que las variables $U' - U$ están particionadas en conjuntos $U'_j$, y puesto que las variables de cada conjunto $U'_j$ sólo aparecen en las cláusulas $C'_j$, debemos demostrar cómo $t$ puede extenderse para cada conjunto $U'_j$ de forma independiente, en cada caso sólo tenemos que verificar que las cláusulas de $C'_j$ son satisfechas. Haremos esto de la siguiente manera:
+
+\begin{itemize}
+	\item Si se ha construido $U'_j$ sobre los casos 1 o 2, entonces las cláusulas de $C'_j$ ya son satisfechas por $t$, de manera que podemos extender arbitrariamente a $U'_j$, por ejemplo, asignando $t'(y) = T$, para todo $y\in U'_j$. 
+	\item Si $U'$ se ha construido sobre el caso 3 $U'_j$ es vacío, y por tanto, toda cláusula de $C'$ ya está satisfecha por $t$.
+	\item Si se ha construido sobre el caso 4 la cláusula $c_j=\left \{ z_1, z_2, \dots, z_k \right \}$, con $k > 3$. Como $t$ es una asignación booleana que satisface $C$, entonces debe haber un entero $l$ tal que el literal $z_l$ tiene un valor verdadero mediante $t$.  
+	\begin{itemize} 
+	\item Si $l$ es 1 o 2, entonces se asignará $t'(y^i_j) = F$ para $1 \le i \le k - 3$.
+	\item Si $l$ es $k - 1$ o $k$, entonces se asignará  $t'(y^i_j) = T$  para $1 \le i \le k - 3$.
+	\item En cualquier otro caso, se asignará  $t'(y^i_j) = T$  para $1 \le i \le l - 2$, y $t'(y^i_j) = F$  para $l -1 \le i \le k - 3$.
+	\end{itemize} 
+\end{itemize}
+Es fácil verificar que estas opciones garantizan que todas las cláusulas de $C'_j$ son satisfechas, y por lo tanto todas las de $C'$ mediante $t'$.  
+
+En el otro sentido, si $t'$ es una asignación booleana que satisface $C'$, es fácil verificar que la restricción de $t'$ a las variables de $U$ debe también satisfacer $C$. Entonces, $C'$ es satisfactible si y sólo si $C$ también lo es.
+
+Para comprobar que esta transformación puede llevarse a cabo en tiempo polinomial es suficiente con observar que el número de cláusulas de tres literales de $C'$ está acotada por un polinomio en $nm$. Por lo tanto, el tamaño de cada entrada de \gls{3sat} está acotado superiormente por una función polinómica del tamaño de la entrada de \gls{sat}. 
+
+\end{proof}
+
+
+\clearpage
+\printglossary[type=\acronymtype]
+
+\end{document}
