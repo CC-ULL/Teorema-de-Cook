@@ -7,8 +7,9 @@
 
 \title{\Huge Teoría de la NP-completitud}
 
-\author{Luz Marina Moreno de Antonio}
-\author{Jorge Riera Ledesma}
+\author{Adrián Rodriguez Bazaga}
+\author{Eleazar Díaz Delgado}
+\author{Rudolf Cicko}
 
 \affil{Departamento de Ingeniería Informática y de Sistemas. Universidad de La Laguna}
 
@@ -17,21 +18,46 @@
 
 \chapter{Teorema de Cook}
 
-\section{Problema involucrado}
+\section{Introducción}
 
-\subsection*{\gls{sat}}
+% \subsection*{Introducción \gls{sat}}
+
+El teorema de Cook también conocido como el teorema de Cook-Levin, se demuestra
+el primer NP-Completo que permitirá que los demás problemas puedan ser
+transformados a él usando una reducción en tiempo polinómico.
+
+El problema usado para probar su NP-completitud es el \gls{SAT}.
+
+\section{Problema \gls{sat}}
+
+
+%% TODO: Definicion del problema esplicacion detallada
+El problema de la satisfabilidad booleana, es el problema de determinar si
+existe una interpretación que satisfaga la formula booleana. Otra forma de verlo
+es que dado un conjunto de valores booleanos pasados a uno fórmula booleana
+hallar aquel conjunto que de valores verdaderos.
+
+\section{Demostración del Teorema de Cook}
+
+%% TODO: Defninir el problema paso a paso
+
+
+\begin{proof}
+
+
+\end{proof}
 
 \noindent ENTRADA: Un conjunto de cláusulas $C=\left \{c_1, c_2, \dots, c_m \right \}$ sobre un conjunto finito $U$ de variables.
 
-\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$? 
+\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$?
 
 
 \begin{thm}
-	\gls{sat} es $\mathcal{NP}$-completo.
+  \gls{sat} es $\mathcal{NP}$-completo.
 \end{thm}
 
 \begin{proof}
-Es fácil comprobar que \gls{sat}	$\in \mathcal{NP}$, ya que se puede encontrar una algoritmo para una \gls{ndtm} que reconozca el lenguaje $L(\mbox{3SAT},e)$, para un esquema de codificación $e$, en un número de pasos acotado por una función polinomial. De esta manera, el primer requerimiento para la prueba de $\mathcal{NP}$-completitud se cumple. 
+Es fácil comprobar que \gls{sat}	$\in \mathcal{NP}$, ya que se puede encontrar una algoritmo para una \gls{ndtm} que reconozca el lenguaje $L(\mbox{3SAT},e)$, para un esquema de codificación $e$, en un número de pasos acotado por una función polinomial. De esta manera, el primer requerimiento para la prueba de $\mathcal{NP}$-completitud se cumple.
 
 Para el segundo requerimiento debemos bajar a nivel de lenguaje, donde \gls{sat} se representa por un lenguaje $L_{SAT}=L[SAT,e]$ para algún esquema de codificación razonable $e$. Debemos demostrar que para todo lenguaje $L\in \mathcal{NP}$, $L \preceq L_{SAT}$. Los lenguajes de la clase $\mathcal{NP}$ son bastante diversos, se trata de una clase infinitamente grande, por lo que no esperemos presentar una demostración para cada uno de los lenguajes por separado.
 
@@ -45,18 +71,18 @@ De esta manera, $f_L$ tendrá la propiedad de que para todo $x\in \Sigma^*$, $x\
 
 Si la cadena $x\in \Sigma^*$ es aceptada por $M$, entonces, habrá una secuencia de estados de $M$ que acepte $x$ acotada superiormente por un polinomio $p(n)$, donde $n=|x|$. Dicha secuencia no puede involucrar ninguna celda de la cinta excepto aquellas comprendidas entre $-p(n)$ y $p(n) + 1$ ya que la la cabeza de lectura/escritura comienza en la celda 1, y se mueve una única posición en cada paso. El estado de la computación en cualquier instante puede determinado completamente dando el contenido de las celdas, el estado actual, y la posición de la cabeza de lectura/escritura. Es más, puesto que no se llevarán a cabo más de $p(n)$ pasos durante la ejecución, habrá a los sumo $p(n) + 1$ instantes que deben ser considerados. Esto nos permitirá describir la computación completamente usando sólo un número limitado de variables booleanas y una asignación booleana para las mismas.
 
-A continuación se muestra cómo $f_L$ construye el conjunto de variables a partir de $M$. Se etiquetarán los estados de $Q$ como $q_0, q_1=q_Y, q_2=q_N, q_3, \dots, q_r$, donde $r= |Q|-1$, y los elementos de $\Gamma$ como $s_0 = b, s_1, s_2, \dots, s_v$, donde $v = |\Gamma| -1$. Se crearán tres tipos de variables, cuyo sentido se especifica en la tabla~\ref{tab:cooktab1}. 
+A continuación se muestra cómo $f_L$ construye el conjunto de variables a partir de $M$. Se etiquetarán los estados de $Q$ como $q_0, q_1=q_Y, q_2=q_N, q_3, \dots, q_r$, donde $r= |Q|-1$, y los elementos de $\Gamma$ como $s_0 = b, s_1, s_2, \dots, s_v$, donde $v = |\Gamma| -1$. Se crearán tres tipos de variables, cuyo sentido se especifica en la tabla~\ref{tab:cooktab1}.
 
 \begin{table}[!ht]
-	\caption{Variables creadas por $f_l$} \label{tab:cooktab1}
-	\begin{center}
-		{\small
-			\renewcommand{\arraystretch}{1.2}
-			\begin{tabular}{@{}C{.15\textwidth}C{.25\textwidth}L{.45\textwidth}@{}}
+  \caption{Variables creadas por $f_l$} \label{tab:cooktab1}
+  \begin{center}
+    {\small
+      \renewcommand{\arraystretch}{1.2}
+      \begin{tabular}{@{}C{.15\textwidth}C{.25\textwidth}L{.45\textwidth}@{}}
 \toprule
-{\em Variable} & {\em Rango} &\multicolumn{1}{C{.45\textwidth}}{\em Significado} \\ 
+{\em Variable} & {\em Rango} &\multicolumn{1}{C{.45\textwidth}}{\em Significado} \\
 \midrule
-$Q[i,k]$       & 
+$Q[i,k]$       &
 
   \begin{minipage}{.24\textwidth} %%
   \centering
@@ -67,7 +93,7 @@ $Q[i,k]$       &
         \end{array}%%
     \end{math} %%
   \end{minipage} & En el instante $i$, $M$ está en el estado $q_k$ \\ \\
-$H[i,i]$       & 
+$H[i,i]$       &
 
   \begin{minipage}{.24\textwidth} %%
   \centering
@@ -77,8 +103,8 @@ $H[i,i]$       &
           -p(n) \le j \le p(n) + 1 %%
         \end{array}%%
     \end{math} %%
-  \end{minipage} & En el instante $i$, la cabeza de lectura/escritura está examinando la celda $j$\\ \\ 
-$S[i,j,k]$       & 
+  \end{minipage} & En el instante $i$, la cabeza de lectura/escritura está examinando la celda $j$\\ \\
+$S[i,j,k]$       &
 
   \begin{minipage}{.24\textwidth} %%
   \centering
@@ -86,14 +112,14 @@ $S[i,j,k]$       &
       \begin{array}{c} %%
           0 \le i\le p(n) \\ %%
            -p(n) \le j \le p(n) + 1 \\ %%
-           0 \le k \le v 
+           0 \le k \le v
         \end{array}%%
     \end{math} %%
-  \end{minipage} & En el instante $i$, el contenido de la celda $j$ es el símbolo $s_k$\\ 
+  \end{minipage} & En el instante $i$, el contenido de la celda $j$ es el símbolo $s_k$\\
 \bottomrule
-			\end{tabular}
-		}
-	\end{center}
+      \end{tabular}
+    }
+  \end{center}
 \end{table}
 \end{proof}
 
