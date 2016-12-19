@@ -316,7 +316,7 @@ Caso 4. & $k = 4$. & $U'_j = \left \{ {\color{magenta}y}^i_j | 1 \le i \le k - 3
 \begin{frame}{Conclusión: 3SAT es NP-completo}
 \begin{block}{Conclusión: SAT $\preceq$ 3SAT}   
 \begin{itemize}
-\item{Todo lo anterior no constituye una prueba de NP-completitud, a no ser que argumentemos que el tamaño del nuevo problema 3SAT está polinomialmente acotado por el tamaño del antiguo problema SAT. \newline \newline Si consideramos cada caso:}
+\item{Todo lo anterior no constituye una prueba de NP-completitud, a no ser que argumentemos que el tamaño del nuevo problema 3SAT está acotado polinómicamente por el tamaño del antiguo problema SAT. \newline \newline Si consideramos cada caso:}
 \end{itemize}
 \begin{table}[]
 \centering
@@ -330,6 +330,15 @@ Caso 4. & $k = 4$. & $U'_j = \left \{ {\color{magenta}y}^i_j | 1 \le i \le k - 3
 k \textgreater= 4                                 & k-3                                               & k                                      & k + 2(k-3)                              
 \end{tabular}
 \end{table}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Conclusión: 3SAT es NP-completo}
+\begin{block}{3SAT está acotado polinómicamente por SAT}
+\begin{itemize}
+\item En todos los casos, el tamaño del problema después de ser transformado es a lo sumo 12 veces más grande que el tamaño del problema original.
+\end{itemize}
 \end{block}
 
 \end{frame}
