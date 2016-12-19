@@ -55,17 +55,17 @@
 % A subtitle is optional and this may be deleted
 \subtitle{Seis problemas básicos $\mathcal{NP}$-completos}
 
-\author{Luz Marina Moreno de Antonio \and Jorge Riera Ledesma}
+\author{Adrián Rodríguez Bazaga, Eleazar Díaz Delgado, Rudolf Cicko}
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
 
-\institute[ULL]{Universidad de La Laguna} % (optional, but mostly needed)
+\institute[Universidad de La Laguna]{Adrián Rodríguez Bazaga, Eleazar Díaz Delgado \and Rudolf Cicko} % (optional, but mostly needed)
 
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
 
-\date{Curso 2016/2017}
+\date{Complejidad Computacional, Grado en Ingeniería Informática \newline Universidad de La Laguna \newline Curso 2016-2017}
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
 %   yourself) who are reading the slides online
@@ -310,6 +310,27 @@ Caso 4. & $k = 4$. & $U'_j = \left \{ {\color{magenta}y}^i_j | 1 \le i \le k - 3
 	\item En cualquier otro caso, se asignará  $t'({\color{magenta}y}^i_j) = T$  para $1 \le i \le l - 2$, y $t'({\color{magenta}y}^i_j) = F$  para $l -1 \le i \le k - 3$.
 	\end{itemize} 
 \end{itemize}\end{block}
+
+\end{frame}
+
+\begin{frame}{Conclusión: 3SAT es NP-completo}
+\begin{block}{Conclusión: SAT $\preceq$ 3SAT}   
+\begin{itemize}
+\item{Todo lo anterior no constituye una prueba de NP-completitud, a no ser que argumentemos que el tamaño del nuevo problema 3SAT está polinomialmente acotado por el tamaño del antiguo problema SAT. \newline \newline Si consideramos cada caso:}
+\end{itemize}
+\begin{table}[]
+\centering
+
+\begin{tabular}{cccc}
+\hline
+\multicolumn{1}{|c|}{\textbf{Tamaño de cláusula}} & \multicolumn{1}{c|}{\textbf{\# nuevos literales}} & \multicolumn{1}{c|}{\textbf{\# antes}} & \multicolumn{1}{c|}{\textbf{\# después}} \\ \hline
+1                                                 & 2                                                 & 1                                      & 12                                       \\
+2                                                 & 1                                                 & 2                                      & 6                                        \\
+3                                                 & 0                                                 & 3                                      & 3                                        \\
+k \textgreater= 4                                 & k-3                                               & k                                      & k + 2(k-3)                              
+\end{tabular}
+\end{table}
+\end{block}
 
 \end{frame}
 
