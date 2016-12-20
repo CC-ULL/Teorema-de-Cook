@@ -8,7 +8,7 @@
 % template and not specifically distribute it as part of a another
 % package/program, I grant the extra permission to freely copy and
 % modify this file as you see fit and even to delete this copyright
-% notice. 
+% notice.
 
 \documentclass[10pt, mathserif, profesionalfont]{beamer}
 
@@ -50,10 +50,7 @@
 %\usetheme{Szeged}
 %\usetheme{Warsaw}
 
-\title{3-SATISFACTIBILIDAD}
-
-% A subtitle is optional and this may be deleted
-\subtitle{Seis problemas básicos $\mathcal{NP}$-completos}
+\title{SATISFACTIBILIDAD}
 
 \author{Adrián Rodríguez Bazaga, Eleazar Díaz Delgado, Rudolf Cicko}
 % - Give the names in the same order as the appear in the paper.
@@ -72,7 +69,7 @@
 
 \subject{Theoretical Computer Science}
 % This is only inserted into the PDF information catalog. Can be left
-% out. 
+% out.
 
 % If you have a file called "university-logo-filename.xxx", where xxx
 % is a graphic format that can be processed by latex or pdflatex,
@@ -98,46 +95,38 @@
 \end{frame}
 
 
-
 \section{Introduction}
 
 
 \begin{frame}{Problemas involucrados}
-    
+
 \begin{block}{\gls{sat}}
-{\small 
+{\small
 \noindent ENTRADA: Un conjunto de cláusulas $C=\left \{c_1, c_2, \dots, c_m \right \}$ sobre un conjunto finito $U$ de variables.
 
-\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$? 
+\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$?
 }
 \end{block}
-
-\begin{block}{\gls{3sat}}
-{\small
-\noindent ENTRADA: Un conjunto de cláusulas $C=\left \{c_1, c_2, \dots, c_m \right \}$ sobre un conjunto finito $U$ de variables tal que $|c_i|=3$, para $1\le i \le m$.
-
-\noindent PREGUNTA: ¿Existe una asignación booleana para $U$, tal que satisfaga todas las cláusulas de $C$? 
-}
-\end{block}
-
 
 \end{frame}
 
 
 \section{Demostración de NP-completitud}
 
-\begin{frame}{3SAT es NP-completo I}
-    
-\begin{block}{3SAT $\in \mathcal{NP}$}    
-Es fácil comprobar que \gls{3sat}	$\in \mathcal{NP}$, ya que se puede encontrar una algoritmo para una \gls{ndtm} que reconozca el lenguaje $L(\mbox{3SAT},e)$, para un esquema de codificación $e$, en un número de pasos acotado por una función polinomial.
+\begin{frame}{SAT es $\mathcal{NP}$-completo I}
 
-\end{block}
+  \begin{block}
+    Primero se demuestra que SAT está en $\mathcal{NP}$. Para se puede generar
+    una máquina de no determinista(NDTM) que resuelva SAT es tiempo polinomial. Es
+    decir que dada una fórmula $\phi$ se hallen los valores de entrada entrada
+    tal que satisfaga $\phi$ usando dicha NDTM.
+  \end{block}
 
 \end{frame}
 
 \begin{frame}{3SAT es NP-completo II}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
+
+\begin{block}{SAT $\preceq$ 3SAT}
 Sea $U=\left \{u_1, u_2, \dots, u_n  \right\}$  y $C=\left \{c_1, c_2, \dots, c_m \right \}$ una entrada arbitraria de \gls{sat}. Construiremos una conjunto $C'$ de cláusulas de tres literales, basadas en un conjunto $U'$ de variables, tal que $C'$ es satisfactible $\Leftrightarrow$ $C$ es satisfactible.
 \end{block}
 
@@ -145,8 +134,8 @@ Sea $U=\left \{u_1, u_2, \dots, u_n  \right\}$  y $C=\left \{c_1, c_2, \dots, c_
 
 
 \begin{frame}{3SAT es NP-completo III}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
+
+\begin{block}{SAT $\preceq$ 3SAT}
 \[
 U' = U \cup \left( \bigcup_{j=1}^m U'_j\right)
 \]
@@ -159,16 +148,16 @@ C' = \bigcup_{j=1}^mC_j.
 
 
 \begin{frame}{3SAT es NP-completo IV}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
+
+\begin{block}{SAT $\preceq$ 3SAT}
 Supóngase que la cláusula $c_j$ viene definida por los literales $\left \{ {\color{blue}z}_1, {\color{blue}z}_2, \dots, {\color{blue}z}_k  \right\}$, donde cada uno de estos elementos deriva de las variables de $U$. La forma en que construimos los conjuntos  $C'_j$ y $U'_j$ va a depender del valor de $k$.
 
 \vspace{0.5cm}
-{\small 
+{\small
 \renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}} 
+\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}
 Caso 1. & $k = 1$. & $U'_j = \left \{ {\color{magenta}y}_j^1, {\color{magenta}y}_j^2 \right \}$ \\
-        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, {\color{magenta}y}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, {\color{magenta}y}_j^2  \right \} , \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}   \right \}$ 	\\
+        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, {\color{magenta}y}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, {\color{magenta}y}_j^2  \right \} , \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}   \right \}$   \\
 \end{tabular}
 }
 \end{block}
@@ -177,16 +166,16 @@ Caso 1. & $k = 1$. & $U'_j = \left \{ {\color{magenta}y}_j^1, {\color{magenta}y}
 
 
 \begin{frame}{3SAT es NP-completo IV}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
+
+\begin{block}{SAT $\preceq$ 3SAT}
 Supóngase que la cláusula $c_j$ viene definida por los literales $\left \{ {\color{blue}z}_1, {\color{blue}z}_2, \dots, {\color{blue}z}_k  \right\}$, donde cada uno de estos elementos deriva de las variables de $U$. La forma en que construimos los conjuntos  $C'_j$ y $U'_j$ va a depender del valor de $k$.
 
 \vspace{0.5cm}
-{\small 
+{\small
 \renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}} 
+\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}
 Caso 2. & $k = 2$. & $U'_j = \left \{ {\color{magenta}y}_j^1 \right \}$ \\
-        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \}, \left \{  {\color{blue}z}_1, {\color{blue}z}_2, \bar{{\color{magenta}y}}_j^1  \right \}   \right \}$ 	\\
+        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \}, \left \{  {\color{blue}z}_1, {\color{blue}z}_2, \bar{{\color{magenta}y}}_j^1  \right \}   \right \}$  \\
 \end{tabular}
 }
 \end{block}
@@ -195,16 +184,16 @@ Caso 2. & $k = 2$. & $U'_j = \left \{ {\color{magenta}y}_j^1 \right \}$ \\
 
 
 \begin{frame}{3SAT es NP-completo IV}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
+
+\begin{block}{SAT $\preceq$ 3SAT}
 Supóngase que la cláusula $c_j$ viene definida por los literales $\left \{ {\color{blue}z}_1, {\color{blue}z}_2, \dots, {\color{blue}z}_k  \right\}$, donde cada uno de estos elementos deriva de las variables de $U$. La forma en que construimos los conjuntos  $C'_j$ y $U'_j$ va a depender del valor de $k$.
 
 \vspace{0.5cm}
-{\small 
+{\small
 \renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}} 
+\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}
 Caso 3. & $k = 3$. & $U'_j = \emptyset$ \\
-        &          &$C'_j = \left \{  c_j  \right \}$ 	\\        
+        &          &$C'_j = \left \{  c_j  \right \}$   \\
 \end{tabular}
 }
 \end{block}
@@ -214,16 +203,16 @@ Caso 3. & $k = 3$. & $U'_j = \emptyset$ \\
 
 
 \begin{frame}{3SAT es NP-completo IV}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
+
+\begin{block}{SAT $\preceq$ 3SAT}
 Supóngase que la cláusula $c_j$ viene definida por los literales $\left \{ {\color{blue}z}_1, {\color{blue}z}_2, \dots, {\color{blue}z}_k  \right\}$, donde cada uno de estos elementos deriva de las variables de $U$. La forma en que construimos los conjuntos  $C'_j$ y $U'_j$ va a depender del valor de $k$.
 
 \vspace{0.5cm}
-{\small 
+{\small
 \renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}      
+\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}
 Caso 4. & $k = 4$. & $U'_j = \left \{ {\color{magenta}y}^i_j | 1 \le i \le k - 3  \right \}$ \\
-        &          &$C'_j = \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \} \cup \left\{\left \{ \bar{{\color{magenta}y}}_j^i, {\color{blue}z}_{i + 2}, {\color{magenta}y}_j^{i + 1}  \right \} | 1 \le i \le k - 4 \right \} \cup \left \{ \bar{{\color{magenta}y}}_j^{k -3}, {\color{blue}z}_{k -1}, {\color{blue}z}_k  \right \}$ 	\\
+        &          &$C'_j = \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \} \cup \left\{\left \{ \bar{{\color{magenta}y}}_j^i, {\color{blue}z}_{i + 2}, {\color{magenta}y}_j^{i + 1}  \right \} | 1 \le i \le k - 4 \right \} \cup \left \{ \bar{{\color{magenta}y}}_j^{k -3}, {\color{blue}z}_{k -1}, {\color{blue}z}_k  \right \}$  \\
 \end{tabular}
 }
 \end{block}
@@ -233,12 +222,12 @@ Caso 4. & $k = 4$. & $U'_j = \left \{ {\color{magenta}y}^i_j | 1 \le i \le k - 3
 
 
 \begin{frame}{3SAT es NP-completo V}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
-Tenemos que demostrar que el conjunto de cláusulas $C'$ es satisfactible si y sólo si el conjunto $C$ lo es. 
+
+\begin{block}{SAT $\preceq$ 3SAT}
+Tenemos que demostrar que el conjunto de cláusulas $C'$ es satisfactible si y sólo si el conjunto $C$ lo es.
 \begin{itemize}
-\item Supóngase primero que $t:U\rightarrow \left \{T,F \right \}$ es una asignación booleana que satisface $C$. 
-\item Veremos a continuación que $t$ puede ser extendida a una asignación booleana $t':U'\rightarrow \left \{T,F \right \}$ satisfaciendo $C'$. 
+\item Supóngase primero que $t:U\rightarrow \left \{T,F \right \}$ es una asignación booleana que satisface $C$.
+\item Veremos a continuación que $t$ puede ser extendida a una asignación booleana $t':U'\rightarrow \left \{T,F \right \}$ satisfaciendo $C'$.
 \item Puesto que las variables $U' - U$ están particionadas en conjuntos $U'_j$, y puesto que las variables de cada conjunto $U'_j$ sólo aparecen en las cláusulas $C'_j$, debemos demostrar cómo $t$ puede extenderse para cada conjunto $U'_j$ de forma independiente, en cada caso sólo tenemos que verificar que las cláusulas de $C'_j$ son satisfechas.
 \end{itemize}
 \end{block}
@@ -246,21 +235,21 @@ Tenemos que demostrar que el conjunto de cláusulas $C'$ es satisfactible si y s
 
 
 \begin{frame}{3SAT es NP-completo VI}
-    
-\begin{block}{SAT $\preceq$ 3SAT}  
-{\small 
+
+\begin{block}{SAT $\preceq$ 3SAT}
+{\small
 \renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}} 
+\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}
 Caso 1. & $k = 1$. & $U'_j = \left \{ {\color{magenta}y}_j^1, {\color{magenta}y}_j^2 \right \}$ \\
-        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, {\color{magenta}y}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, {\color{magenta}y}_j^2  \right \} , \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}   \right \}$ 	\\
+        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, {\color{magenta}y}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, {\color{magenta}y}_j^2  \right \} , \left \{  {\color{blue}z}_1, {\color{magenta}y}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}, \left \{  {\color{blue}z}_1, \bar{{\color{magenta}y}}_j^1, \bar{{\color{magenta}y}}_j^2  \right \}   \right \}$   \\
 Caso 2. & $k = 2$. & $U'_j = \left \{ {\color{magenta}y}_j^1 \right \}$ \\
-        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \}, \left \{  {\color{blue}z}_1, {\color{blue}z}_2, \bar{{\color{magenta}y}}_j^1  \right \}   \right \}$ 	\\
+        &          &$C'_j = \left \{ \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \}, \left \{  {\color{blue}z}_1, {\color{blue}z}_2, \bar{{\color{magenta}y}}_j^1  \right \}   \right \}$  \\
 \end{tabular}
 }
- 
-  
+
+
 \begin{itemize}
-	\item Si se ha construido $U'_j$ sobre los casos 1 o 2, entonces las cláusulas de $C'_j$ ya son satisfechas por $t$, de manera que podemos extender arbitrariamente a $U'_j$, por ejemplo, asignando $t'(y) = T$, para todo $y\in U'_j$. 
+  \item Si se ha construido $U'_j$ sobre los casos 1 o 2, entonces las cláusulas de $C'_j$ ya son satisfechas por $t$, de manera que podemos extender arbitrariamente a $U'_j$, por ejemplo, asignando $t'(y) = T$, para todo $y\in U'_j$.
 \end{itemize}
 \end{block}
 
@@ -268,20 +257,20 @@ Caso 2. & $k = 2$. & $U'_j = \left \{ {\color{magenta}y}_j^1 \right \}$ \\
 
 
 \begin{frame}{3SAT es NP-completo VI}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
+
+\begin{block}{SAT $\preceq$ 3SAT}
 
 
-{\small 
+{\small
 \renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}} 
+\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}
 Caso 3. & $k = 3$. & $U'_j = \emptyset$ \\
-        &          &$C'_j = \left \{  c_j  \right \}$ 	\\        
+        &          &$C'_j = \left \{  c_j  \right \}$   \\
 \end{tabular}
 }
 
 \begin{itemize}
-	\item Si $U'$ se ha construido sobre el caso 3 $U'_j$ es vacío, y por tanto, toda cláusula de $C'$ ya está satisfecha por $t$.
+  \item Si $U'$ se ha construido sobre el caso 3 $U'_j$ es vacío, y por tanto, toda cláusula de $C'$ ya está satisfecha por $t$.
 \end{itemize}\end{block}
 
 
@@ -291,30 +280,30 @@ Caso 3. & $k = 3$. & $U'_j = \emptyset$ \\
 
 
 \begin{frame}{3SAT es NP-completo VI}
-    
-\begin{block}{SAT $\preceq$ 3SAT}    
 
-{\small 
+\begin{block}{SAT $\preceq$ 3SAT}
+
+{\small
 \renewcommand{\arraystretch}{1.8}
-\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}      
+\begin{tabular}{@{}L{.10\textwidth}L{.10\textwidth}L{.70\textwidth}@{}}
 Caso 4. & $k = 4$. & $U'_j = \left \{ {\color{magenta}y}^i_j | 1 \le i \le k - 3  \right \}$ \\
-        &          &$C'_j = \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \} \cup \left\{\left \{ \bar{{\color{magenta}y}}_j^i, {\color{blue}z}_{i + 2}, {\color{magenta}y}_j^{i + 1}  \right \} | 1 \le i \le k - 4 \right \} \cup \left \{ \bar{{\color{magenta}y}}_j^{k -3}, {\color{blue}z}_{k -1}, {\color{blue}z}_k  \right \}$ 	\\
+        &          &$C'_j = \left \{  {\color{blue}z}_1, {\color{blue}z}_2, {\color{magenta}y}_j^1  \right \} \cup \left\{\left \{ \bar{{\color{magenta}y}}_j^i, {\color{blue}z}_{i + 2}, {\color{magenta}y}_j^{i + 1}  \right \} | 1 \le i \le k - 4 \right \} \cup \left \{ \bar{{\color{magenta}y}}_j^{k -3}, {\color{blue}z}_{k -1}, {\color{blue}z}_k  \right \}$  \\
 \end{tabular}
 }
 
 \begin{itemize}
-	\item Si se ha construido sobre el caso 4 la cláusula $c_j=\left \{ {\color{blue}z}_1, {\color{blue}z}_2, \dots, {\color{blue}z}_k \right \}$, con $k > 3$. Como $t$ es una asignación booleana que satisface $C$, entonces debe haber un entero $l$ tal que el literal ${\color{blue}z}_l$ tiene un valor verdadero mediante $t$.  
-	\begin{itemize} 
-	\item Si $l$ es 1 o 2, entonces se asignará $t'({\color{magenta}y}^i_j) = F$ para $1 \le i \le k - 3$.
-	\item Si $l$ es $k - 1$ o $k$, entonces se asignará  $t'({\color{magenta}y}^i_j) = T$  para $1 \le i \le k - 3$.
-	\item En cualquier otro caso, se asignará  $t'({\color{magenta}y}^i_j) = T$  para $1 \le i \le l - 2$, y $t'({\color{magenta}y}^i_j) = F$  para $l -1 \le i \le k - 3$.
-	\end{itemize} 
+  \item Si se ha construido sobre el caso 4 la cláusula $c_j=\left \{ {\color{blue}z}_1, {\color{blue}z}_2, \dots, {\color{blue}z}_k \right \}$, con $k > 3$. Como $t$ es una asignación booleana que satisface $C$, entonces debe haber un entero $l$ tal que el literal ${\color{blue}z}_l$ tiene un valor verdadero mediante $t$.
+  \begin{itemize}
+  \item Si $l$ es 1 o 2, entonces se asignará $t'({\color{magenta}y}^i_j) = F$ para $1 \le i \le k - 3$.
+  \item Si $l$ es $k - 1$ o $k$, entonces se asignará  $t'({\color{magenta}y}^i_j) = T$  para $1 \le i \le k - 3$.
+  \item En cualquier otro caso, se asignará  $t'({\color{magenta}y}^i_j) = T$  para $1 \le i \le l - 2$, y $t'({\color{magenta}y}^i_j) = F$  para $l -1 \le i \le k - 3$.
+  \end{itemize}
 \end{itemize}\end{block}
 
 \end{frame}
 
 \begin{frame}{Conclusión: 3SAT es NP-completo}
-\begin{block}{Conclusión: SAT $\preceq$ 3SAT}   
+\begin{block}{Conclusión: SAT $\preceq$ 3SAT}
 \begin{itemize}
 \item{Todo lo anterior no constituye una prueba de NP-completitud, a no ser que argumentemos que el tamaño del nuevo problema 3SAT está acotado polinómicamente por el tamaño del antiguo problema SAT. \newline \newline Si consideramos cada caso:}
 \end{itemize}
@@ -327,7 +316,7 @@ Caso 4. & $k = 4$. & $U'_j = \left \{ {\color{magenta}y}^i_j | 1 \le i \le k - 3
 1                                                 & 2                                                 & 1                                      & 12                                       \\
 2                                                 & 1                                                 & 2                                      & 6                                        \\
 3                                                 & 0                                                 & 3                                      & 3                                        \\
-k \textgreater= 4                                 & k-3                                               & k                                      & k + 2(k-3)                              
+k \textgreater= 4                                 & k-3                                               & k                                      & k + 2(k-3)
 \end{tabular}
 \end{table}
 \end{block}
@@ -344,5 +333,3 @@ k \textgreater= 4                                 & k-3                         
 \end{frame}
 
 \end{document}
-
-
